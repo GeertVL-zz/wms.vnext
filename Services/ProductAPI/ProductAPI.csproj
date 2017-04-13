@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <UserSecretsId>45960c8f-0232-4c01-b35c-96982bab3a5b</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />
@@ -15,5 +16,13 @@
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\EventBus\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\HealthChecks\src\Microsoft.Extensions.HealthChecks.SqlServer\Microsoft.Extensions.HealthChecks.SqlServer.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\HealthChecks\src\Microsoft.Extensions.HealthChecks\Microsoft.Extensions.HealthChecks.csproj" />
   </ItemGroup>
 </Project>

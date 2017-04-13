@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +9,10 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Reflection;
 using ProductAPI.InfraStructure.Filters;
 using ProductAPI.InfraStructure;
+using Microsoft.Extensions.HealthChecks;
 using System.Data.Common;
+using IntegrationEventLogEF.Services;
+using Microsoft.Extensions.Options;
 
 namespace ProductAPI
 {
@@ -42,38 +42,53 @@ namespace ProductAPI
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc(options => {
-                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+            services.AddHealthChecks(checks =>
+            {
+                checks.AddSqlCheck("ProductDb", Configuration["ConnectionString"]);
             });
 
-            services.AddDbContext<ProductContext>(options => {
-                options.UseSqlServer(Configuration["ConnectionString"], 
-                                     sqlServerOptionsAction: sqlOptions => {
-                                         sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-                                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
-                                     });
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+            }).AddControllersAsServices();
+
+            services.AddDbContext<ProductContext>(options =>
+            {
+                options.UseSqlServer(Configuration["ConnectionString"],
+                               sqlServerOptionsAction: sqlOptions =>
+                               {
+                                       sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                                       sqlOptions.EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                                   });
                 options.ConfigureWarnings(warnings => warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
             });
 
             services.Configure<Settings>(Configuration);
 
             services.AddSwaggerGen();
-            services.ConfigureSwaggerGen(options => {
+            services.ConfigureSwaggerGen(options =>
+            {
                 options.DescribeAllEnumsAsStrings();
-                options.SingleApiVersion(new Swashbuckle.Swagger.Model.Info() {
+                options.SingleApiVersion(new Swashbuckle.Swagger.Model.Info()
+                {
                     Title = "wms.vnext - Product HTTP API",
                     Version = "v1",
-                    Description = "The Product Microservice HTTP API"                
+                    Description = "The Product Microservice HTTP API"
                 });
             });
 
-            services.AddCors(options => {
-                options.AddPolicy("CorsPolicy", 
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+              builder => builder.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials());
             });
+
+            services.AddTransient<Func<DbConnection, IIntegrationEventLogService>>(sp => (DbConnection c) => new IntegrationEventLogService(c));
+            var serviceProvider = services.BuildServiceProvider();
+            var configuration = serviceProvider.GetRequiredService<IOptionsSnapshot<Settings>>().Value;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,11 +113,6 @@ namespace ProductAPI
         private void WaitForSqlAvailability(ProductContext ctx, ILoggerFactory loggerFactory, int? retry = 0)
         {
             int retryForAvailability = retry.Value;
-            try
-            {
-
-            }
         }
     }
 }
-*

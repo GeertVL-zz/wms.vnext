@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.HealthChecks", "..\BuildingBlocks\HealthChecks\src\Microsoft.Extensions.HealthChecks\Microsoft.Extensions.HealthChecks.csproj", "{A0145426-50DF-4B07-B967-A028D9E471CA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductAPI", "..\Services\ProductAPI\ProductAPI.csproj", "{88A63CBD-9BCD-45FA-9B33-4B9E9FF9B97F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Extensions.HealthChecks.SqlServer", "..\BuildingBlocks\HealthChecks\src\Microsoft.Extensions.HealthChecks.SqlServer\Microsoft.Extensions.HealthChecks.SqlServer.csproj", "{61811957-7FF8-4FCD-95A9-F28EAB8663DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{3FFA026F-E6AD-4C54-AA2F-F543AC94E919}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationEventLogEF", "..\BuildingBlocks\EventBus\IntegrationEventLogEF\IntegrationEventLogEF.csproj", "{55EB7DBD-9611-4201-A47F-5EE236134A2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus", "..\BuildingBlocks\EventBus\EventBus\EventBus.csproj", "{ECD98885-4C00-4E22-9237-26247487CC5F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0145426-50DF-4B07-B967-A028D9E471CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0145426-50DF-4B07-B967-A028D9E471CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0145426-50DF-4B07-B967-A028D9E471CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0145426-50DF-4B07-B967-A028D9E471CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88A63CBD-9BCD-45FA-9B33-4B9E9FF9B97F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A63CBD-9BCD-45FA-9B33-4B9E9FF9B97F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A63CBD-9BCD-45FA-9B33-4B9E9FF9B97F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A63CBD-9BCD-45FA-9B33-4B9E9FF9B97F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61811957-7FF8-4FCD-95A9-F28EAB8663DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61811957-7FF8-4FCD-95A9-F28EAB8663DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61811957-7FF8-4FCD-95A9-F28EAB8663DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61811957-7FF8-4FCD-95A9-F28EAB8663DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55EB7DBD-9611-4201-A47F-5EE236134A2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55EB7DBD-9611-4201-A47F-5EE236134A2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55EB7DBD-9611-4201-A47F-5EE236134A2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55EB7DBD-9611-4201-A47F-5EE236134A2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECD98885-4C00-4E22-9237-26247487CC5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECD98885-4C00-4E22-9237-26247487CC5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECD98885-4C00-4E22-9237-26247487CC5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECD98885-4C00-4E22-9237-26247487CC5F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A0145426-50DF-4B07-B967-A028D9E471CA} = {3FFA026F-E6AD-4C54-AA2F-F543AC94E919}
+		{61811957-7FF8-4FCD-95A9-F28EAB8663DC} = {3FFA026F-E6AD-4C54-AA2F-F543AC94E919}
+		{55EB7DBD-9611-4201-A47F-5EE236134A2A} = {3FFA026F-E6AD-4C54-AA2F-F543AC94E919}
+		{ECD98885-4C00-4E22-9237-26247487CC5F} = {3FFA026F-E6AD-4C54-AA2F-F543AC94E919}
+	EndGlobalSection
+EndGlobal
