@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Common;
-using System.Text;
 using System.Threading.Tasks;
-using EventBus.Events;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Linq;
+using Wms.BuildingBlocks.EventBus.Events;
 
-namespace IntegrationEventLogEF.Services
+namespace Wms.BuildingBlocks.IntegrationEventLogEF.Services
 {
     public class IntegrationEventLogService : IIntegrationEventLogService
     {

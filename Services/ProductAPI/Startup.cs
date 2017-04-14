@@ -11,8 +11,13 @@ using ProductAPI.InfraStructure.Filters;
 using ProductAPI.InfraStructure;
 using Microsoft.Extensions.HealthChecks;
 using System.Data.Common;
-using IntegrationEventLogEF.Services;
+using Wms.BuildingBlocks.IntegrationEventLogEF.Services;
 using Microsoft.Extensions.Options;
+using ProductAPI.IntegrationEvents;
+using Wms.BuildingBlocks.EventBus.Abstractions;
+using Wms.BuildingBlocks.EventBusRabbitMQ;
+using Wms.BuildingBlocks.IntegrationEventLogEF;
+using System.Data.SqlClient;
 
 namespace ProductAPI
 {
@@ -89,6 +94,8 @@ namespace ProductAPI
             services.AddTransient<Func<DbConnection, IIntegrationEventLogService>>(sp => (DbConnection c) => new IntegrationEventLogService(c));
             var serviceProvider = services.BuildServiceProvider();
             var configuration = serviceProvider.GetRequiredService<IOptionsSnapshot<Settings>>().Value;
+            services.AddTransient<IProductIntegrationEventService, ProductIntegrationEventService>();
+            services.AddSingleton<IEventBus>(new EventBusRabbitMQ(configuration.EventBusConnection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,12 +114,36 @@ namespace ProductAPI
 
             WaitForSqlAvailability(context, loggerFactory);
 
+            ProductContextSeed.SeedAsync(app, loggerFactory).Wait();
 
+            var integrationEventLogContext = new IntegrationEventLogContext(
+                new DbContextOptionsBuilder<IntegrationEventLogContext>()
+                .UseSqlServer(Configuration["ConnectionString"], b => b.MigrationsAssembly("Product.API"))
+                .Options);
+            integrationEventLogContext.Database.Migrate();
         }
 
         private void WaitForSqlAvailability(ProductContext ctx, ILoggerFactory loggerFactory, int? retry = 0)
         {
             int retryForAvailability = retry.Value;
+            try
+            {
+                ctx.Database.OpenConnection();
+            }
+            catch (SqlException ex)
+            {
+                if (retryForAvailability < 10)
+                {
+                    retryForAvailability++;
+                    var log = loggerFactory.CreateLogger(nameof(Startup));
+                    log.LogError(ex.Message);
+                    WaitForSqlAvailability(ctx, loggerFactory, retryForAvailability);
+                }
+            }
+            finally
+            {
+                ctx.Database.CloseConnection();
+            }
         }
     }
 }

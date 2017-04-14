@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace IntegrationEventLogEF
+﻿namespace Wms.BuildingBlocks.IntegrationEventLogEF
 {
     public enum EventStateEnum
     {

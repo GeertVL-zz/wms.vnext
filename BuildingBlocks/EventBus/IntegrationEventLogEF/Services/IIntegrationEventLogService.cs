@@ -1,8 +1,8 @@
-﻿using EventBus.Events;
+﻿using Wms.BuildingBlocks.EventBus.Events;
 using System.Data.Common;
 using System.Threading.Tasks;
 
-namespace IntegrationEventLogEF.Services
+namespace Wms.BuildingBlocks.IntegrationEventLogEF.Services
 {
     public interface IIntegrationEventLogService
     {

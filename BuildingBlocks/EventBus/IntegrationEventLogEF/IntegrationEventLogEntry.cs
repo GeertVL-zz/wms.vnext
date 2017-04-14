@@ -1,10 +1,8 @@
-﻿using EventBus.Events;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using Wms.BuildingBlocks.EventBus.Events;
 
-namespace IntegrationEventLogEF
+namespace Wms.BuildingBlocks.IntegrationEventLogEF
 {
     public class IntegrationEventLogEntry
     {

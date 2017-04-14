@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EventBus.Events
+namespace Wms.BuildingBlocks.EventBus.Events
 {
     public class IntegrationEvent
     {
