@@ -3,6 +3,7 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <UserSecretsId>45960c8f-0232-4c01-b35c-96982bab3a5b</UserSecretsId>
     <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
+    <DockerComposeProjectPath>..\..\wms\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="wwwroot\**" />
